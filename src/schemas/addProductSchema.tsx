@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import moment from 'moment';
 
 import { Product } from '../interfaces/appInterface';
 import { MESSAGE } from '../commons/constants';
@@ -20,21 +21,34 @@ export const addProductSchema = Yup.object().shape({
     logo: Yup.string()
         .url( MESSAGE.url )
         .required( MESSAGE.required ),
-    date_release: Yup.string()
-        // .max(new Date(), 'La fecha no puede ser menor a hoy')
+    date_release: Yup.date()
+        .min( moment( new Date() ).subtract( 1, 'day' ), MESSAGE.date.lessThanToday )
+        .typeError( MESSAGE.date.typeError )
         .required( MESSAGE.required ),
-    date_revision: Yup.string()
+    date_revision: Yup.date()
+        .when('date_release',
+            ( date_release, schema ) => {
+                if ( isCorrectDate( date_release[ 0 ] ) ) {
+                    const afterYear = moment( date_release[ 0 ] ).add( 1, 'year');
+                    return schema.min( afterYear , MESSAGE.date.oneYear );
+                }
+                
+                return schema;
+            }
+        )
+        .when('date_release',
+            ( date_release, schema ) => {
+                if ( isCorrectDate( date_release[ 0 ] ) ) {
+                    const afterYear = moment( date_release[ 0 ] ).add( 1, 'year');
+                    return schema.max( afterYear , MESSAGE.date.oneYear );
+                }
+                
+                return schema;
+            }
+        )
+        .typeError( MESSAGE.date.typeError )
         .required( MESSAGE.required )
-        // .test('date-range', 'End date must be after start date', validateDateRange),
 });
-
-// const validateDateRange = ( obj ) => {
-//     const { start, end } = obj;
-//     if (!start || !end) {
-//       return true; // don't validate if either field is missing
-//     }
-//     return moment(end).isSameOrAfter(start); // custom validation logic
-//   };
 
 export const addProductInitialValues: Product = {
     id: '',
@@ -44,3 +58,5 @@ export const addProductInitialValues: Product = {
     date_release: '',
     date_revision: '',
 };
+
+const isCorrectDate = ( date: Date ): boolean => date instanceof Date && isFinite( date.getTime() );

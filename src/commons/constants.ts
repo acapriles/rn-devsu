@@ -34,4 +34,9 @@ export const MESSAGE = {
         name: "Ingrese menos de 101 caracteres",
         description: "Ingrese menos de 201 caracteres",
     },
+    date: {
+        typeError: 'Debe colocar una fecha válida (YYYY-MM-DD)',
+        lessThanToday: 'La fecha no puede ser menor a hoy',
+        oneYear: 'La fecha tiene que ser un año exacto despues a la fecha de liberación',
+    }
 };
