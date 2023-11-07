@@ -7,7 +7,7 @@ export const NoProducts = () => {
 
     return (
         <View style={ style.container }>
-            <Text>No hay productos cargados en el sistema.</Text>
+            <Text testID="message">No hay productos cargados en el sistema.</Text>
         </View>
     )
 }

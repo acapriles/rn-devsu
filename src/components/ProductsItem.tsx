@@ -17,7 +17,7 @@ export const ProductsItem = ( { productItem }: ProductItemProps ) => {
     const style = styles();
 
     return(
-        <TouchableOpacity
+        <TouchableOpacity testID="touchableOpacity"
             onPress={ () => navigation.navigate('DetailScreen', productItem) }
         >
             <View style={ style.container }>

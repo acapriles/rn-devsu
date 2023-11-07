@@ -53,6 +53,7 @@ export const TextInput = ({
 
     return (
         <RNTextInput
+            testID="input"
             style={[ styles.textInput, style ]}
             placeholder={ placeholder }
             secureTextEntry={ secureTextEntry }

@@ -13,7 +13,7 @@ export const Header = () => {
     const style = styles();
     
     return (
-        <TouchableOpacity
+        <TouchableOpacity testID="header-touchableOpacity"
             style={ style.container }
             onPress={ () => navigation.navigate('ProductsScreen') }
         >

@@ -16,7 +16,7 @@ export const Button = ( { name, backgoundColor, textColor, onPress, isLoading = 
         >
             {
                 isLoading
-                ? <ActivityIndicator size="small" color={ COLORS.white } />
+                ? <ActivityIndicator testID="indicator" size="small" color={ COLORS.white } />
                 : <Text style={ style.text }>{ name }</Text>
             }
             
